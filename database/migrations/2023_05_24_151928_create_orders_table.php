@@ -3,6 +3,9 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Enums\OrderCategory;
+use App\Enums\OrderStatus;
+
 
 class CreateOrdersTable extends Migration
 {
@@ -20,20 +23,8 @@ class CreateOrdersTable extends Migration
             $table->foreign('client_id')
             ->references('id')
             ->on('clients');
-            $table->enum('category', [
-                'ремонт компьютера', 
-                'ремонт телефона', 
-                'ремонт ноутбука', 
-                'ремонт телевизора', 
-                'ремонт комплектующих', 
-                'покупка комплектующих']);
-            $table->enum('status', [
-                'Новый', 
-                'Принят в обработку', 
-                'Ожидает запчасти для ремонта', 
-                'Завершен', 'Готов к выдаче', 
-                'Отменен (отказ клиента)', 
-                'Отменен (отсутствуют запчасти)']);
+            $table->enum('category', OrderCategory::toArray());
+            $table->enum('status', OrderStatus::toArray());
         });
     }
 

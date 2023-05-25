@@ -3,33 +3,37 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Handle a login request to the application.
      *
-     * @return \Illuminate\Http\Response
+     * @param  \App\Http\Requests\LoginRequest  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            // Аутентификация прошла успешно
-            return redirect()->route('home')->with('success', 'Вы успешно вошли!');
+            return redirect()->route('home')->with('success', __('auth.login_success'));
         }
 
-        // Аутентификация не удалась
         return redirect()->back()->withInput($request->only('email'))->withErrors([
-            'email' => 'Неверный адрес электронной почты или пароль.',
+            'email' => __('auth.invalid_credentials'),
         ]);
     }
 
+    /**
+     * Log the user out of the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function logout(Request $request)
     {
         Auth::logout();

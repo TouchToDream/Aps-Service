@@ -18,22 +18,12 @@ class RegisterController extends Controller
             'password' => ['required', 'confirmed', 'min:3'],
         ]);
     
-        if (User::where('email', $request->email)->exists()) {
-            return redirect()->back()->withErrors(['email' => 'Почтовый ящик уже используется']);
-        }
-    
-        if ($request->password !== $request->password_confirmation) {
-            return redirect()->back()->withErrors(['password' => 'Пароли не совпадают']);
-        }
-    
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
     
-        // Ваши дополнительные действия после успешной регистрации
-    
-        return redirect()->route('home')->with('success', 'Регистрация прошла успешно!');
+        return redirect()->route('home')->with('success', __('auth.registration_success'));
     }
 }
