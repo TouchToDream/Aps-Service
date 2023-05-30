@@ -4,7 +4,7 @@
     <div class="container">
         <h1>Login</h1>
 
-        <form>
+        <form method="POST" action="{{ route('login') }}">
             @csrf
 
             <div>
