@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Product;
+use app\http\Requests\ProductRequest;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::all();
+        $products = Product::paginate(10);
         return view('products.index', compact('products'));
     }
 
@@ -18,17 +18,8 @@ class ProductController extends Controller
         return view('products.create');
     }
 
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        $request->validate([
-            'category' => ['required', 'string'],
-            'name' => ['required', 'string'],
-            'article' => ['required', 'string'],
-            'purchase_price' => ['required', 'numeric'],
-            'quantity' => ['required', 'integer'],
-            'selling_price' => ['required', 'numeric'],
-        ]);
-
         Product::create([
             'category' => $request->category,
             'name' => $request->name,
@@ -37,7 +28,7 @@ class ProductController extends Controller
             'quantity' => $request->quantity,
             'selling_price' => $request->selling_price,
         ]);
-
+    
         return redirect()->route('products.index')->with('success', 'Product created successfully.');
     }
 
@@ -46,17 +37,8 @@ class ProductController extends Controller
         return view('products.edit', compact('product'));
     }
 
-    public function update(Request $request, Product $product)
+    public function update(ProductRequest $request, Product $product)
     {
-        $request->validate([
-            'category' => ['required', 'string'],
-            'name' => ['required', 'string'],
-            'article' => ['required', 'string'],
-            'purchase_price' => ['required', 'numeric'],
-            'quantity' => ['required', 'integer'],
-            'selling_price' => ['required', 'numeric'],
-        ]);
-
         $product->update([
             'category' => $request->category,
             'name' => $request->name,
@@ -65,7 +47,7 @@ class ProductController extends Controller
             'quantity' => $request->quantity,
             'selling_price' => $request->selling_price,
         ]);
-
+    
         return redirect()->route('products.index')->with('success', 'Product updated successfully.');
     }
 

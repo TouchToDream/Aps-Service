@@ -19,12 +19,13 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->unsignedBigInteger('client_id');
-            $table->foreign('client_id')
-            ->references('id')
-            ->on('clients');
+            $table->unsignedBigInteger('order_number')->unique();
+            $table->unsignedBigInteger('user_id');
             $table->enum('category', OrderCategory::toArray());
             $table->enum('status', OrderStatus::toArray());
+            $table->foreign('user_id')
+            ->references('id')
+            ->on('users');
         });
     }
 
