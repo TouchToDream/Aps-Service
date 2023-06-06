@@ -17,7 +17,7 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->enum('category', ProductCategory::toArray())->nullable();;
+            $table->enum('category', ProductCategory::toArray())->nullable();
             $table->string('name');
             $table->string('article');
             $table->decimal('purchase_price', 8, 2);

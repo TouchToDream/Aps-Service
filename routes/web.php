@@ -2,6 +2,14 @@
 
 use GuzzleHttp\RetryMiddleware;
 use Illuminate\Support\Facades\Route;
+use App\Models\Product;
+
+
+// Route::bind('testBind', fn($id) => Product::where('id', (int)$id)->firstOrFail());
+Route::bind('testBind', function($id) 
+{
+   return Product::where('id', (int)$id * 2)->firstOrFail();
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -34,3 +42,7 @@ Route::get('/register', function () {
 Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('register');
 
 Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
+
+Route::get('/products', [App\http\Controllers\ProductController::class, 'index'])->middleware(['auth'])->name('products.index');
+
+
