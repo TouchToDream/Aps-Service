@@ -19,7 +19,6 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->unsignedBigInteger('order_number')->unique();
             $table->unsignedBigInteger('user_id');
             $table->enum('category', OrderCategory::toArray());
             $table->enum('status', OrderStatus::toArray());

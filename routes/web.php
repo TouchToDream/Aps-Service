@@ -43,6 +43,6 @@ Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, '
 
 Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
-Route::get('/products', [App\http\Controllers\ProductController::class, 'index'])->name('products.index');
+Route::get('/products', [App\http\Controllers\ProductController::class, 'index'])->middleware(['auth'])->name('products.index');
 
 

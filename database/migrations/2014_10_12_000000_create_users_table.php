@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->string('phone')->nullable();
             $table->integer('discount')->default(0);
-            $table->text('comments')->nullable();
+            $table->text('note')->nullable();
         });
     }
 
