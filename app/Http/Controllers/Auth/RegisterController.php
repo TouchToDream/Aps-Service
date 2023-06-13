@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use App\Models\User;
-use App\Http\Requests\RegisterRequest;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\RegisterRequest;
 
 
 class RegisterController extends Controller
@@ -16,6 +17,10 @@ class RegisterController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+        ]);
+
+        $cart = Cart::create([
+            'user_id' => $user->id,
         ]);
     
         return redirect()->route('home')->with('success', __('auth.registration_success'));

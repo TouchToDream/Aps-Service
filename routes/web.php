@@ -41,6 +41,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/products', [App\http\Controllers\ProductController::class, 'index'])->name('products.index');
     Route::get('/user', [App\http\Controllers\UserController::class, 'index'])->name('users.index');
     Route::get('/user/edit', [App\http\Controllers\UserController::class, 'edit'])->name('user.edit');
+    Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/add/{product}', [App\Http\Controllers\CartController::class, 'addProduct'])->name('cart.add');
+    Route::put('/cart/{cartProduct}', [App\Http\Controllers\CartController::class, 'update'])->name('cart.update');
+    Route::delete('/cart/{cartProduct}', [App\Http\Controllers\CartController::class, 'destroy'])->name('cart.destroy');
+
+    
 });
 
 Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('register');
