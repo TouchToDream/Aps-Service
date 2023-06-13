@@ -33,16 +33,21 @@ Route::get('/login', function () {
 
 Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login');
 
-
-
 Route::get('/register', function () {
     return view('auth.register');
 })->name('register');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/products', [App\http\Controllers\ProductController::class, 'index'])->name('products.index');
+    Route::get('/user', [App\http\Controllers\UserController::class, 'index'])->name('users.index');
+    Route::get('/user/edit', [App\http\Controllers\UserController::class, 'edit'])->name('user.edit');
+});
 
 Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('register');
 
 Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
-Route::get('/products', [App\http\Controllers\ProductController::class, 'index'])->middleware(['auth'])->name('products.index');
+Route::delete('/user/{user}', [App\http\Controllers\UserController::class, 'destroy'])->name('user.destroy');
 
+Route::put('/user/{user}', [App\Http\Controllers\UserController::class, 'update'])->name('user.update');
 

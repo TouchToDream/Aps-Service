@@ -73,6 +73,7 @@
             @auth
             <a href="{{ url('/') }}">Home</a>
             <a href="{{ url('/products') }}">Products</a>
+            <a href="{{ route('users.index') }}">Profile</a>
             <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="links">Log Out</a>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
               @csrf
