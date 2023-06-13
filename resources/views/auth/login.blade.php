@@ -24,7 +24,9 @@
 
             <div>
                 <button type="submit">Login</button>
+                <a href="{{ route('register') }}">Register</a>
             </div>
+            
         </form>
     </div>
 @endsection

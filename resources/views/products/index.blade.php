@@ -12,6 +12,7 @@
                     <th>Article</th>
                     <th>Quantity</th>
                     <th>Selling Price</th>
+                    <th>Add to Crat</th>
                 </tr>
             </thead>
             <tbody>
@@ -22,7 +23,15 @@
                         <td>{{ $product->article }}</td>
                         <td>{{ $product->quantity }}</td>
                         <td>{{ $product->selling_price }}</td>
+                        <td>
+                            <form action="{{ route('cart.add', $product->id) }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="quantity" value="1">
+                                <button type="submit" class="btn btn-primary">Add</button>
+                            </form>
+                        </td>
                     </tr>
+                    
                 @endforeach
             </tbody>
         </table>

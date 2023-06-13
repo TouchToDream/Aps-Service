@@ -25,7 +25,15 @@
             <span class="text-red-500">{{ $message }}</span>
         @enderror
     </div>
-    
+
+    <div>
+        <button type="submit">Save</button>
+    </div>
+   
+</form>
+
+<form action="{{ route('user.changePassword', $user) }}" method="POST">
+    @csrf
 
     <div>
         <label for="password">New Password:</label>
@@ -47,10 +55,10 @@
             <span class="text-red-500">{{ $message }}</span>
         @enderror
     </div>
+
     <div>
-        <button type="submit">Save</button>
+        <button type="submit">Change Password</button>
     </div>
-   
 </form>
 
 @endsection

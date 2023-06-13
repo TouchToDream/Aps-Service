@@ -40,14 +40,18 @@ Route::get('/register', function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/products', [App\http\Controllers\ProductController::class, 'index'])->name('products.index');
     Route::get('/user', [App\http\Controllers\UserController::class, 'index'])->name('users.index');
+    Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
     Route::get('/user/edit', [App\http\Controllers\UserController::class, 'edit'])->name('user.edit');
+    Route::put('/user/{user}', [App\Http\Controllers\UserController::class, 'update'])->name('user.update');
+    Route::post('/user/{user}/change-password', [App\Http\Controllers\UserController::class, 'changePassword'])->name('user.changePassword');
+    Route::delete('/user/{user}', [App\http\Controllers\UserController::class, 'destroy'])->name('user.destroy');
+    Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/add/{product}', [App\Http\Controllers\CartController::class, 'addProduct'])->name('cart.add');
+    Route::put('/cart/{cartProduct}', [App\Http\Controllers\CartController::class, 'update'])->name('cart.update');
+    Route::delete('/cart/{cartProduct}', [App\Http\Controllers\CartController::class, 'destroy'])->name('cart.destroy');
+
+    
 });
 
 Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('register');
-
-Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
-
-Route::delete('/user/{user}', [App\http\Controllers\UserController::class, 'destroy'])->name('user.destroy');
-
-Route::put('/user/{user}', [App\Http\Controllers\UserController::class, 'update'])->name('user.update');
 

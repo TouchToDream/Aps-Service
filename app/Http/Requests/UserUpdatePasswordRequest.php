@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserUpdateRequest extends FormRequest
+class UserUpdatePasswordRequest extends FormRequest
 {
     public function authorize()
     {
@@ -14,8 +14,8 @@ class UserUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'nullable|string|max:255',
-            'phone' => 'nullable|string|regex:/^\+380[0-9]{9}$/',
+            'current_password' => 'required',
+            'password' => 'nullable|string|min:4|confirmed',
         ];
     }
 }

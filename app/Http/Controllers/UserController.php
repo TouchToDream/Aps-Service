@@ -8,6 +8,7 @@ use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\UserUpdateRequest;
+use App\Http\Requests\UserUpdatePasswordRequest;
 
 class UserController extends Controller
 {
@@ -15,6 +16,7 @@ class UserController extends Controller
     {
         $user = Auth::user();
         $userData = User::where('id', $user->id)->first();
+
         return view('users.index', compact('userData'));
     }
 
@@ -37,6 +39,7 @@ class UserController extends Controller
     public function edit()
     {
         $user = Auth::user();
+
         return view('users.edit', compact('user'));
     }
 
@@ -44,25 +47,28 @@ class UserController extends Controller
     {
         $validatedData = $request->validated();
 
-        if (!Hash::check($validatedData['current_password'], $user->password)) {
-            return redirect()->back()->withErrors(['current_password' => 'Incorrect current password.']);
-        }
+        $user->update([
+            'name' => $validatedData['name'],
+            'phone' => $validatedData['phone'],
+        ]);
 
-        if (isset($validatedData['name'])) {
-            $user->name = $validatedData['name'];
-        }
-
-        if (isset($validatedData['phone'])) {
-            $user->phone = $validatedData['phone'];
-        }
-
-        if (isset($validatedData['password'])) {
-            $user->password = Hash::make($validatedData['password']);
-        }
-        
-        $user->update();
         return redirect()->route('users.index')->with('success', 'User updated successfully.');
     }
+
+    public function changePassword(UserUpdatePasswordRequest $request, User $user)
+{
+    $validatedData = $request->validated();
+
+    if (!Hash::check($validatedData['current_password'], $user->password)) {
+        return redirect()->back()->withErrors(['current_password' => 'Incorrect current password.']);
+    }
+
+    $user->update([
+        'password' => Hash::make($validatedData['password']),
+    ]);
+
+    return redirect()->route('users.index')->with('success', 'Password changed successfully.');
+}
 
     public function destroy(User $user)
     {
